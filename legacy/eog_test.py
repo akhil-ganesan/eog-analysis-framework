@@ -5,7 +5,7 @@ import keyboard
 from collections import deque
 
 # Set up the serial port and parameters
-serial_port = 'COM3'  # Replace with your Arduino's serial port (e.g., '/dev/ttyUSB0' on Linux or 'COM3' on Windows)
+serial_port = 'COM6'  # Replace with your Arduino's serial port (e.g., '/dev/ttyUSB0' on Linux or 'COM3' on Windows)
 baud_rate = 9600
 ser = serial.Serial(serial_port, baud_rate)
 
@@ -31,9 +31,10 @@ update = 50
 while True:
     if ser.in_waiting > 0:
         data = ser.readline().decode('utf-8').strip()  # Read and decode data from serial
-        print(ser.in_waiting)
+        # print(ser.in_waiting)
         if data.isdigit():  # Ensure the data is numeric
             value = int(data)
+            # print(value)
             x_data.append(len(x_data))
             y_data.append(value)
             readings += 1
@@ -41,11 +42,12 @@ while True:
             update_plot()
             readings = 0
             plt.pause(0.1)
-        if (y_data[-1] < 600):
-            keyboard.press('space')
-            keyboard.release('space') 
+        # if (y_data[-1] < 600):
+        #     pass
+            # keyboard.press('space')
+            # keyboard.release('space')
     if keyboard.is_pressed('q'):
-            keyboard.release('space')
+            # keyboard.release('space')
             break
 
 ser.close()                                                                                                                                                                                                                               
