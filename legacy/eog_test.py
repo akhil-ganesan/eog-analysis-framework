@@ -38,6 +38,39 @@ update = history // update_rate
 
 # update_plot()
 
+# Use 15 kOhm gain
+def detectBlinks():
+    if y_data[-1] < 485 <= y_data[-2]:
+        print("Blink")
+        keyboard.press('space')
+    else:
+        keyboard.release('space')
+
+# Use 15 kOhm gain
+def detectUpDown():
+    if y_data[-1] < 485 <= y_data[-2]:
+        print("Up")
+        keyboard.press('space')
+    elif y_data[-1] > 535 >= y_data[-2]:
+        print("Down")
+        keyboard.press('space')
+    else:
+        keyboard.release('space')
+
+
+def detectRightLeft():
+    if y_data[-1] < 480 <= y_data[-2]:
+        print("Left")
+        keyboard.release('right')
+        keyboard.press('left')
+    if y_data[-1] > 550 >= y_data[-2]:
+        print("Right")
+        keyboard.release('left')
+        keyboard.press('right')
+    else:
+        keyboard.release('left')
+        keyboard.release('right')
+
 while True:
     if ser.in_waiting > 0:
         try:
@@ -56,11 +89,8 @@ while True:
             readings += 1
             if readings > 2:
                 # print("Check", y_data[-2], y_data[-1])
-                if y_data[-1] < 485 <= y_data[-2]:
-                    print("Blink")
-                    keyboard.press('space')
-                else:
-                    keyboard.release('space')
+                # detectRightLeft()
+                detectBlinks()
             # if readings > update:
             #     # update_plot()
             #     readings = 0
