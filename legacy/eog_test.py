@@ -3,7 +3,6 @@ import matplotlib.pyplot as plt
 import numpy as np
 import keyboard
 from collections import deque
-import neurokit
 
 # Set up the serial port and parameters
 serial_port = 'COM6'  # Replace with your Arduino's serial port (e.g., '/dev/ttyUSB0' on Linux or 'COM3' on Windows)
@@ -57,14 +56,14 @@ while True:
             readings += 1
             if readings > 2:
                 # print("Check", y_data[-2], y_data[-1])
-                if y_data[-1] < 475 <= y_data[-2]:
+                if y_data[-1] < 485 <= y_data[-2]:
                     print("Blink")
                     keyboard.press('space')
                 else:
                     keyboard.release('space')
-            if readings > update:
-                # update_plot()
-                readings = 0
+            # if readings > update:
+            #     # update_plot()
+            #     readings = 0
                 # plt.pause(0.01)
             # if (y_data[-1] < 600):
             #     pass
