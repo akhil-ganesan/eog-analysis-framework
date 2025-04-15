@@ -11,6 +11,7 @@ ser = serial.Serial(serial_port, baud_rate)
 history = 500
 update_rate = 10
 a = 0.5
+baseline = 500
 
 # Setup the plot
 # plt.ion()  # Turn on interactive mode
@@ -39,16 +40,19 @@ update = history // update_rate
 # update_plot()
 
 # Use 15 kOhm gain
+# 495 for QL Chip
 def detectBlinks():
-    if y_data[-1] < 485 <= y_data[-2]:
+    if y_data[-1] < 400 <= y_data[-2]:
         print("Blink")
         keyboard.press('space')
+        return True
     else:
         keyboard.release('space')
+        return False
 
 # Use 15 kOhm gain
 def detectUpDown():
-    if y_data[-1] < 485 <= y_data[-2]:
+    if y_data[-1] < 495 <= y_data[-2]:
         print("Up")
         keyboard.press('space')
     elif y_data[-1] > 535 >= y_data[-2]:
@@ -91,6 +95,9 @@ while True:
                 # print("Check", y_data[-2], y_data[-1])
                 # detectRightLeft()
                 detectBlinks()
+                # if not detectBlinks():
+                #    baseline = np.average(y_data)
+
             # if readings > update:
             #     # update_plot()
             #     readings = 0
